@@ -34,6 +34,7 @@ from lpr.evaluation.rejection import (
     select_score_threshold,
 )
 from lpr.retrieval.search import SkuRanking, rank_queries
+from lpr.stats.resampling import clustered_bootstrap_rate_ci
 
 Rule = Literal["score", "score_margin"]
 
@@ -105,6 +106,7 @@ def evaluate_representation(
     rule: Rule = "score",
     target_far: float = 5.0,
     prototypes: bool = False,
+    bootstrap_repeats: int = 10_000,
 ) -> list[ReferenceResult]:
     """Evaluate one representation; ``embeddings`` and ``split`` are keyed by role.
 
@@ -154,10 +156,15 @@ def evaluate_representation(
             t_unknown = _rank(embeddings, split, "test_unknown", gallery_index)
             tu_s1, tu_s2 = t_unknown.top_two()
             segments = _unknown_segments(split["test_unknown"], gallery_skus, family_of)
+            unknown_skus = np.asarray([s.sku_id for s in split["test_unknown"]], dtype=object)
             for segment, mask in segments.items():
-                result.rejection[segment] = _operating_point(
-                    threshold, s1, s2, correct, tu_s1[mask], tu_s2[mask]
+                point = _operating_point(threshold, s1, s2, correct, tu_s1[mask], tu_s2[mask])
+                accepted = threshold.accepts(tu_s1[mask], tu_s2[mask])
+                # FAR interval: resample the unknown SKUs of the segment.
+                point["far_ci"] = clustered_bootstrap_rate_ci(
+                    accepted, list(unknown_skus[mask]), repeats=bootstrap_repeats
                 )
+                result.rejection[segment] = point
         results.append(result)
         if prototypes:
             vectors, sku_ids = prototype_gallery(

@@ -98,6 +98,25 @@ def clustered_bootstrap_ci(
     )
 
 
+def clustered_bootstrap_rate_ci(
+    events: np.ndarray,
+    groups: Sequence[str],
+    repeats: int = 10_000,
+    confidence: float = 0.95,
+    seed: int = 42,
+) -> tuple[float, float]:
+    """Percentile interval (%) of a rate, resampling groups with replacement.
+
+    Used for the false accept rate of unknown queries, with the unknown SKU as the group.
+    """
+    events = np.asarray(events, dtype=np.float64)
+    if events.size == 0:
+        return float("nan"), float("nan")
+    result = clustered_bootstrap_ci(events, groups, repeats=repeats, confidence=confidence,
+                                    seed=seed)
+    return result.ci_a
+
+
 def paired_randomisation_test(
     correct_a: np.ndarray,
     correct_b: np.ndarray,

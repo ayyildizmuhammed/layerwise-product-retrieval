@@ -39,6 +39,7 @@ def evaluate_all(
     pairs: Sequence[tuple[str, str]] = (),
     prototypes: bool = False,
     bootstrap_repeats: int = 10_000,
+    resampling_unit: str = "source_group",
     device: torch.device | None = None,
     batch_size: int = 64,
     num_workers: int = 4,
@@ -66,14 +67,15 @@ def evaluate_all(
         for name in representation.names:
             by_role = {role: vectors[name] for role, vectors in embeddings.items()}
             results[name] = evaluate_representation(
-                by_role, split, references, gallery_seed, rule, target_far, prototypes
+                by_role, split, references, gallery_seed, rule, target_far, prototypes,
+                bootstrap_repeats,
             )
             recall = {r.references: r.metrics["recall_at_1"]
                       for r in results[name] if r.gallery == "crops"}
             log.info("%s R@1 by reference count: %s", name, recall)
         representation.cpu()
 
-    _write(results, output_dir, pairs, bootstrap_repeats)
+    _write(results, output_dir, pairs, bootstrap_repeats, resampling_unit)
     return results
 
 
@@ -82,6 +84,7 @@ def _write(
     output_dir: Path,
     pairs: Sequence[tuple[str, str]],
     bootstrap_repeats: int,
+    resampling_unit: str = "source_group",
 ) -> None:
     payload = {
         name: [
@@ -134,9 +137,18 @@ def _write(
             crops_a = [r for r in results[a] if r.gallery == "crops"]
             crops_b = [r for r in results[b] if r.gallery == "crops"]
             for ra, rb in zip(crops_a, crops_b, strict=True):
-                groups = [g or p for g, p in zip(ra.records.source_groups, ra.records.paths,
-                                                 strict=True)]
+                groups = _resampling_groups(ra.records, resampling_unit)
                 paired = compare(ra.records.correct, rb.records.correct, groups,
                                  repeats=bootstrap_repeats)
                 writer.writerow([a, b, ra.references, paired.accuracy_a, paired.accuracy_b,
                                  paired.difference, *paired.ci_difference, paired.p_value])
+
+
+def _resampling_groups(records, unit: str) -> list[str]:
+    """Resampling unit of every known query: its source group (falling back to the image when a
+    split has no groups), its SKU, or the image itself."""
+    if unit == "sku":
+        return list(records.sku_ids)
+    if unit == "image":
+        return list(records.paths)
+    return [g or p for g, p in zip(records.source_groups, records.paths, strict=True)]

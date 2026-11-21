@@ -34,7 +34,7 @@ lpr-frozen-sweep --split-dir data/rp2k/splits --image-root /path/to/RP2K \
     --output-dir runs/rp2k_frozen --rule score_margin
 
 lpr-frozen-sweep --split-dir data/products6k/splits --image-root /path/to/Products-6K \
-    --output-dir runs/products6k_frozen
+    --output-dir runs/products6k_frozen --resampling-unit sku
 ```
 
 ## 3. Depth-specific fine-tuning

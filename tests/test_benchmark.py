@@ -44,6 +44,8 @@ def test_evaluate_representation_end_to_end():
         assert top.rejection["same_family"]["num_unknown"] == 4
         assert top.rejection["cross_family"]["num_unknown"] == 4
         assert top.threshold["rule"] == rule
+        low, high = top.rejection["all"]["far_ci"]
+        assert low <= top.rejection["all"]["far"] <= high
         assert len(top.records.rows()) == 30
 
 

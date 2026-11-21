@@ -108,7 +108,8 @@ lpr-evaluate --checkpoints runs/l3_l5_seed54/best.pt runs/l6_l8_seed54/best.pt \
 
 Common options: `--references 10 1` (nested galleries with up to 10 and 1 reference images per
 SKU), `--gallery-seed`, `--rule score|score_margin` (rejection rule), `--target-far 5`,
-`--prototypes`, `--bootstrap-repeats 10000`, `--device cuda|mps|cpu`.
+`--prototypes`, `--bootstrap-repeats 10000`, `--resampling-unit source_group|sku|image`,
+`--device cuda|mps|cpu`.
 
 ### Outputs
 

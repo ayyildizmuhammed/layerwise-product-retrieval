@@ -28,6 +28,10 @@ def add_evaluation_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--prototypes", action="store_true",
                         help="also evaluate prototype galleries (mean embedding per SKU)")
     parser.add_argument("--bootstrap-repeats", type=int, default=10_000)
+    parser.add_argument("--resampling-unit", choices=["source_group", "sku", "image"],
+                        default="source_group",
+                        help="unit of the paired bootstrap and randomisation test (source_group "
+                             "falls back to the image when a split has no groups)")
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--num-workers", type=int, default=4)
     parser.add_argument("--device", default=None, help="cuda, mps or cpu (default: auto)")

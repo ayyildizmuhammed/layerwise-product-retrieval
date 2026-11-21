@@ -31,7 +31,7 @@ import numpy as np
 
 #: Score and margin grid of the score-and-margin rule.
 SCORE_GRID: tuple[float, ...] = (
-    0.20, 0.30, 0.40, 0.50, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95,
+    0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.92, 0.94, 0.96,
 )
 MARGIN_GRID: tuple[float, ...] = (0.00, 0.02, 0.05, 0.08, 0.10, 0.12, 0.15, 0.20)
 

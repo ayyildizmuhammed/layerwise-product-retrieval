@@ -52,6 +52,7 @@ def main(argv: list[str] | None = None) -> None:
         representations, split, args.output_dir, references=args.references,
         gallery_seed=args.gallery_seed, rule=args.rule, target_far=args.target_far,
         prototypes=args.prototypes, bootstrap_repeats=args.bootstrap_repeats,
+        resampling_unit=args.resampling_unit,
         device=resolve_device(args.device),
         batch_size=args.batch_size, num_workers=args.num_workers,
     )

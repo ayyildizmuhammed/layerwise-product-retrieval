@@ -54,6 +54,7 @@ def main(argv: list[str] | None = None) -> None:
         gallery_seed=args.gallery_seed, rule=args.rule, target_far=args.target_far,
         pairs=[tuple(pair) for pair in args.compare],
         prototypes=args.prototypes, bootstrap_repeats=args.bootstrap_repeats,
+        resampling_unit=args.resampling_unit,
         device=resolve_device(args.device),
         batch_size=args.batch_size, num_workers=args.num_workers,
     )

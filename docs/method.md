@@ -85,7 +85,9 @@ each separates correct from incorrect known predictions.
 
 **Statistics.** Crops from one shelf photograph are dependent, so the photograph (source group)
 is the resampling unit: confidence intervals use a source-group clustered bootstrap and paired
-differences a source-group paired randomisation test.
+differences a source-group paired randomisation test (sign flips per group). Without source
+groups the unit is the query image; `--resampling-unit sku` resamples query SKUs instead, as used
+for Products-6K. Intervals for the false accept rate resample the unknown SKUs.
 
 | Part | Code |
 |---|---|
