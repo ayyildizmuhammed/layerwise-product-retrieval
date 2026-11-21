@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this software or data, please cite it as below."
+title: "Layer-Wise Product Retrieval"
+abstract: "Reference implementation and evaluation resources for layer-wise vision transformer representations in fine-grained product retrieval."
+type: software
+authors:
+  - family-names: "Ayyildiz"
+    given-names: "Muhammed"
+    orcid: "https://orcid.org/0009-0000-4778-8681"
+    affiliation: "Izmir Institute of Technology"
+repository-code: "https://github.com/ayyildizmuhammed/layerwise-product-retrieval"
+license: MIT
+version: 0.1.0
+date-released: 2026-11-21
+keywords:
+  - fine-grained product retrieval
+  - vision transformer
+  - intermediate representations
+  - metric learning
+  - open-set rejection

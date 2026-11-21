@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lpr"
+version = "0.1.0"
+description = "Layer-wise vision transformer representations for fine-grained product retrieval"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Muhammed Ayyildiz" }]
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.1",
+    "torchvision>=0.16",
+    "numpy>=1.24",
+    "pillow>=10.0",
+    "pyyaml>=6.0",
+    "tqdm>=4.66",
+    "opencv-python-headless>=4.8",
+    # Required by the Perception Encoder code (installed separately, see README).
+    "einops>=0.7",
+    "timm>=1.0.15",
+    "huggingface_hub>=0.23",
+]
+
+[project.optional-dependencies]
+baselines = ["open_clip_torch>=2.24"]
+dev = ["pytest>=8.0", "ruff>=0.5"]
+
+[project.scripts]
+lpr-frozen-sweep = "lpr.cli.frozen_sweep:main"
+lpr-finetune = "lpr.cli.finetune:main"
+lpr-evaluate = "lpr.cli.evaluate:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

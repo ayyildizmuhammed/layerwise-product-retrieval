@@ -1,0 +1,35 @@
+# Fine-tuning window L3-5 : blocks 3-5, post-LN, attention pool and a
+# bias-free 768x768 head are trained; every other encoder weight is frozen.
+stop_layer: 5
+window_size: 3
+
+# PK sampling and loss
+P: 16
+K: 4
+margin: 0.3
+
+# Optimisation: AdamW, per-step cosine schedule with linear warm-up
+lr_encoder: 1.0e-5
+lr_head: 1.0e-3
+weight_decay: 1.0e-4
+warmup_steps: 200
+
+# Mining cycles, validation and early stopping
+cycles: 5
+epochs_per_cycle: 8
+eval_every: 2
+patience: 4
+num_positives: 2
+num_negatives: 4
+positive_buckets: [hard, semi_hard]
+negative_buckets: [semi_hard, hard]
+mining:
+  top_k: 80
+  num_hard: 4
+  num_positives: 2
+  min_negative_similarity: 0.50
+  max_positive_similarity: 0.95
+
+val_gallery_fraction: 0.2
+seed: 54
+num_workers: 4

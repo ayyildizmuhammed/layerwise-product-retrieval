@@ -1,0 +1,14 @@
+# Core dependencies; install the package with `pip install -e .` instead when possible.
+torch>=2.1
+torchvision>=0.16
+numpy>=1.24
+pillow>=10.0
+pyyaml>=6.0
+tqdm>=4.66
+opencv-python-headless>=4.8
+einops>=0.7
+timm>=1.0.15
+huggingface_hub>=0.23
+# Perception Encoder, pinned to the commit used in the experiments (installed without its own
+# requirements, which pin a much larger stack):
+#   pip install --no-deps "git+https://github.com/facebookresearch/perception_models@3e352cca660658d4b5c90f42a7808b11469e4c66"

@@ -1,0 +1,12 @@
+{
+  "skus": {
+    "gallery": 259,
+    "val_known": 116,
+    "test_known": 259,
+    "val_unknown": 10,
+    "test_unknown": 91
+  },
+  "test_unknown_same_family_skus": 28,
+  "test_unknown_cross_family_skus": 63,
+  "unused_skus": []
+}

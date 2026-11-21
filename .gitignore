@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.venv/
+.DS_Store
+data/images/
+data/crops/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+runs/
+outputs/
+*.pt
+*.npy
