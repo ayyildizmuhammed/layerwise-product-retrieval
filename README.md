@@ -2,8 +2,7 @@
 
 Reference implementation of the method in
 
-> **Layer-Wise Vision Transformer Representations for Fine-Grained Retail Product Retrieval
->**
+> **Layer-Wise Vision Transformer Representations for Fine-Grained Retail Product Retrieval**
 
 The study asks whether intermediate layers of a vision transformer give a better basis for
 exact-SKU product retrieval than its final embedding. It reads out every layer of the Perception
