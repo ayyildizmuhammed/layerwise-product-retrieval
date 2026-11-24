@@ -2,8 +2,8 @@
 
 Reference implementation of the method in
 
-> **Intermediate-Layer Representations in Vision Transformers for Fine-Grained Product Retrieval:
-> Effects of Fine-Tuning, Domain Shift, and Unknown-Product Rejection**
+> **Layer-Wise Vision Transformer Representations for Fine-Grained Retail Product Retrieval
+>**
 
 The study asks whether intermediate layers of a vision transformer give a better basis for
 exact-SKU product retrieval than its final embedding. It reads out every layer of the Perception
